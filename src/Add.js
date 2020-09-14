@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Image, View, TouchableOpacity, Dimensions } from 'react-native';
-import plus from '../../assets/plus.png';
+import plus from '../assets/plus.png';
 
-export default function({ navigation }) {
+export default function({ navigation, direction }) {
     return (
         <View>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AddTaskScreen")}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(direction)}>
                 <Image source={plus} />
             </TouchableOpacity>
         </View>

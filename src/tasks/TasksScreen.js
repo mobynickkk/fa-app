@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { StyleSheet, View, Text } from 'react-native';
-import AddTask from './AddTask'
+import AddTask from '../Add'
 
 
 export default function({ navigation, tasks }) {
@@ -21,7 +21,7 @@ export default function({ navigation, tasks }) {
     }
     return(
       <View style={styles.container}>
-        <AddTask navigation={navigation} />
+        <AddTask navigation={navigation} direction="AddTaskScreen" />
         <FlatList
           style={{width: "95%"}}
           data={tasks}
