@@ -6,6 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AuthScreen from './src/auth/AuthScreen';
 import Tasks from './src/Tasks';
 import Schedule from './src/Schedule';
+import Contacts from './src/Contacts';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,6 +15,7 @@ export default function App() {
   const [user, setUser] = React.useState({});
 
   const Auth = ({ navigation }) => <AuthScreen navigation={navigation} setUser={setUser} />
+  const TaskSet = ({state}) => <Tasks state={user} />
 
   return (
     <NavigationContainer>
@@ -34,10 +36,18 @@ export default function App() {
             />
             <Tab.Screen 
               name="Tasks" 
-              component={Tasks} 
+              component={TaskSet} 
               options={{
                 tabBarLabel: "Домашние задания",
                 tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="book" color={color} size={size} />
+              }}
+            />
+            <Tab.Screen 
+              name="Contacts" 
+              component={Contacts} 
+              options={{
+                tabBarLabel: "Преподаватели",
+                tabBarIcon: ({color, size}) => <MaterialCommunityIcons name="contacts" color={color} size={size} />
               }}
             />
           </>
