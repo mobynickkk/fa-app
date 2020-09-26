@@ -1,15 +1,34 @@
 import React from 'react';
 import { StyleSheet, View, Text, Alert, Image } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo.png';
+import * as Crypto from 'expo-crypto';
 
 export default function({ navigation, setUser }) {
 
-    const [fields, setFields] = React.useState({})
+    const [fields, setFields] = React.useState({name: '', group: ''})
 
-    const verifyUser = () => {
-        if (fields.name !== "" && fields.group !== "") {
-            setUser(fields)
+    const verifyUser = async () => {
+        if (fields.name && fields.group) {
+            const string = fields.name+fields.group;
+            const hash = await Crypto.digestStringAsync(
+                Crypto.CryptoDigestAlgorithm.SHA256,
+                string,
+                { encoding: Crypto.CryptoEncoding.HEX }
+            );
+            let response = await fetch('http://fa-app.herokuapp.com/api/v1/profile?hash=' + hash);
+                
+            let userInfo = await response.json();
+
+            if (response.ok){
+                setUser({...userInfo, hash});
+            }
+            else
+            {
+                Alert.alert("Ошибка входа", "Пользователь не найден")
+            }
+
+                
         } else {
             Alert.alert("Ошибка входа", "Вы ввели неправильные данные")
         }
@@ -21,12 +40,14 @@ export default function({ navigation, setUser }) {
             <TextInput 
                 style={styles.textInput}
                 placeholder="Введите свое ФИО"
-                onChangeText={text => setFields({...fields, name: text})}
+                autoCapitalize="words"
+                onChangeText={text => setFields({...fields, name: text.trim()})}
             />
             <TextInput 
                 style={styles.textInput} 
                 placeholder="Введите свою группу"
-                onChangeText={text => setFields({...fields, group: text})}    
+                autoCapitalize="characters"
+                onChangeText={text => setFields({...fields, group: text.trim()})}    
             />
             <TouchableOpacity 
                 style={styles.button}
