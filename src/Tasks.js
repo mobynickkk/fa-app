@@ -5,12 +5,26 @@ import TasksScreen from './tasks/TasksScreen';
 
 const Stack = createStackNavigator();
 
-export default function() {
-    
+export default function({state}) {
+
     const [tasks, setTasks] = React.useState([]);
 
+    const getTasks = async () => {
+        let response = await fetch('http://fa-app.herokuapp.com/api/v1/homework?hash=' +
+        state.hash);
+        if (response.ok) {
+            setTasks(await response.json())
+        } else {
+          Alert.alert("Ошибка запроса", "Не удалось найти домашние задания")
+        }
+    }
+
+    React.useEffect(() => {
+        getTasks();
+    }, [])
+
     const HomeTasks = ({ navigation }) => <TasksScreen navigation={navigation} tasks={tasks} />
-    const AddScreen = ({ navigation }) => <AddTaskScreen navigation={navigation} tasks={tasks} setTasks={setTasks} />
+    const AddScreen = ({ navigation }) => <AddTaskScreen state={state} navigation={navigation} tasks={tasks} setTasks={setTasks} />
 
     return (
         <Stack.Navigator>

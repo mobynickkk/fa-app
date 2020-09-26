@@ -7,14 +7,18 @@ import AddTask from '../Add'
 export default function({ navigation, tasks }) {
 
     const renderTask = ({ item }) => {
+
+      let dateArray = item.deadline.split('-');
+      let date = dateArray[2] + '.' + dateArray[1] + '.' + dateArray[0]
+
       return (
         <View style={styles.taskContainer}>
           <View style={{flex: 4}}>
             <Text style={styles.taskName}>{item.subject}</Text>
-            <Text>{item.name}</Text>
+            <Text>{item.task}</Text>
           </View>
           <View style={styles.dateContainer}>
-            <Text style={{color: "#006d7a"}}>{item.date}</Text>
+            <Text style={{color: "#006d7a", fontSize: 12}}>{date}</Text>
           </View>
         </View>
       )
@@ -26,7 +30,7 @@ export default function({ navigation, tasks }) {
           style={{width: "95%"}}
           data={tasks}
           renderItem={renderTask}
-          keyExtractor={task => task.key}
+          keyExtractor={task => task.id.toString()}
           extraData={tasks}
         />
       </View>
@@ -40,15 +44,17 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
     taskContainer: {
-      borderBottomColor: "#212121",
-      borderBottomWidth: 1,
+      //borderBottomColor: "#212121",
+      //borderBottomWidth: 1,
+      marginBottom: 2,
       width: "100%",
       paddingHorizontal: "5%",
       paddingVertical: "2%",
       flexDirection: "row"
     },
     taskName: {
-      fontSize: 30
+      fontSize: 16,
+      fontWeight: "700"
     },
     dateContainer: {
       flex: 1,
