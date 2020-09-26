@@ -15,7 +15,7 @@ export default function({ navigation, direction }) {
 const styles = StyleSheet.create({
     button: {
         position: "absolute",
-        top: Dimensions.get('window').height*0.63,
+        top: Dimensions.get('window').height*0.7,
         left: Dimensions.get('window').width*0.25,
         height: 75,
         width: 75,

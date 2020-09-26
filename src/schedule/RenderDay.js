@@ -7,8 +7,8 @@ export default function({ item }) {
     const daysOfWeek = ['Воскресенье', 'Понедельник', 'Вторник', 
                         'Среда', 'Четверг', 'Пятница', 'Суббота'];
     const dateArray = item.key.split('/');
-    const tempDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2]
-    const rawDate = new Date(tempDate);
+    const tempDate = dateArray[1] + '.' + dateArray[0] + '.' + dateArray[2]
+    const rawDate = new Date(item.key);
     const dayOfWeek = daysOfWeek[rawDate.getDay()];
 
     // Захотелось побольше констант в жизни, что поделать...
@@ -17,12 +17,12 @@ export default function({ item }) {
         <View>
             <View style={styles.dateContainer}>
                 <Text style={styles.date}>{dayOfWeek}</Text>
-                <Text style={styles.date}>{item.key}</Text>
+                <Text style={styles.date}>{tempDate}</Text>
             </View>
             <View>
                 {item.list.map(lesson => {
                     return (
-                        <RenderLesson lesson={lesson} />
+                        <RenderLesson key={tempDate+lesson.time+lesson.teacher} lesson={lesson} />
                     );
                 })}
             </View>
@@ -32,14 +32,15 @@ export default function({ item }) {
 
 const styles = StyleSheet.create({
     date: {
-        fontSize: 20,
-        backgroundColor: "#005c67",
-        color: "#fff"
+        fontSize: 17,
+        backgroundColor: "#fff",
+        color: "#005c67",
+        fontWeight: "700"
     },
     dateContainer: {
-        backgroundColor: "#005c67", 
-        paddingHorizontal: 10, 
-        flexDirection: "row",
-        justifyContent: "space-between"
+        backgroundColor: "#fff", 
+        paddingLeft: 20,
+        justifyContent: "space-around",
+        paddingTop: 15
     }
 })

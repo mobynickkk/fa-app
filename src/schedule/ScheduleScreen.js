@@ -1,93 +1,29 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Alert } from 'react-native';
 import RenderDay from './RenderDay';
 
 export default function() {
 
-    const schedule = [
-        {
-            key: "14/09/20",
-            list: [
-                {
-                    subject: "История",
-                    time: "10:10-11:40",
-                    teacher: "Рябчикова ЕИ"
-                },
-                {
-                    subject: "Матанализ",
-                    time: "11:50-13:20",
-                    teacher: "Волкова ЕС"
-                }
-            ]
-        },
-        {
-            key: "15/09/20",
-            list: [
-                {
-                    subject: "История",
-                    time: "10:10-11:40",
-                    teacher: "Рябчикова ЕИ"
-                },
-                {
-                    subject: "Матанализ",
-                    time: "11:50-13:20",
-                    teacher: "Волкова ЕС"
-                }
-            ]
-        },
-        {
-            key: "16/09/20",
-            list: [
-                {
-                    subject: "История",
-                    time: "10:10-11:40",
-                    teacher: "Рябчикова ЕИ"
-                },
-                {
-                    subject: "Матанализ",
-                    time: "11:50-13:20",
-                    teacher: "Волкова ЕС"
-                }
-            ]
-        },
-        {
-            key: "17/09/20",
-            list: [
-                {
-                    subject: "История",
-                    time: "10:10-11:40",
-                    teacher: "Рябчикова ЕИ"
-                },
-                {
-                    subject: "Матанализ",
-                    time: "11:50-13:20",
-                    teacher: "Волкова ЕС"
-                }
-            ]
-        },
-        {
-            key: "18/09/20",
-            list: [
-                {
-                    subject: "История",
-                    time: "10:10-11:40",
-                    teacher: "Рябчикова ЕИ"
-                },
-                {
-                    subject: "Матанализ",
-                    time: "11:50-13:20",
-                    teacher: "Волкова ЕС"
-                }
-            ]
-        },
-    ]
+    const [schedule, setSchedule] = React.useState([])
+
+    React.useEffect(() => {
+        async function fetchData(){
+        let response = await fetch('http://fa-app.herokuapp.com/api/v1/schedule/');
+        if (response.ok) {
+            setSchedule(await response.json());
+        } else {
+            Alert.alert("Ошибка загрузки данных", "Проверьте подключение к сети")
+        }}
+        fetchData();
+    }, [])
     
     return (
-        <View>
+        <View style={{ paddingTop: 2 }}>
             <FlatList 
                 data={schedule}
                 keyExtractor={item => item.key}
                 renderItem={RenderDay}
+                extraData={schedule}
             />
         </View>
     );
