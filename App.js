@@ -3,10 +3,10 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AuthScreen from './src/auth/AuthScreen';
-import Tasks from './src/Tasks';
-import Schedule from './src/Schedule';
-import Contacts from './src/Contacts';
+import AuthScreen from './src/view/auth/AuthScreen';
+import Tasks from './src/view/Tasks';
+import Schedule from './src/view/Schedule';
+import Contacts from './src/view/Contacts';
 
 const Tab = createBottomTabNavigator();
 
